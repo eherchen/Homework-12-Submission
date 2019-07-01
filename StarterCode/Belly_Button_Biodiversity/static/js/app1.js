@@ -4,25 +4,53 @@ function buildMetadata(sample) {
 
   // Use `d3.json` to fetch the metadata for a sample
     // Use d3 to select the panel with id of `#sample-metadata`
-
+    var url = `/metadata/${sample}`
+    d3.json(url).then(function(data) {
+      var table = d3.select("#sample-metadata");
+    
     // Use `.html("") to clear any existing metadata
+      table.html("");
+
 
     // Use `Object.entries` to add each key and value pair to the panel
     // Hint: Inside the loop, you will need to use d3 to append new
     // tags for each key-value in the metadata.
-
+      Object.entries(data).forEach(([key, value]) => {
+        var item = table.append("p");
+        item.text(key + ": " + value);
+    });
+  });
     // BONUS: Build the Gauge Chart
     // buildGauge(data.WFREQ);
 }
 
 function buildCharts(sample) {
-// function buildCharts() {
-  // @TODO: Use `d3.json` to fetch the sample data for the plots
-  console.log(sample);
-  var url = `/samples/${sample}`;
-  d3.json(url).then(function(data) {
 
-    // console.log(response);  
+  // @TODO: Use `d3.json` to fetch the sample data for the plots
+
+  // var url = `/samples/${sample}`;
+  //   d3.json(`/${sample}`).then(function(data) {
+
+    var url = `/samples/${sample}`;
+    d3.json(url).then(function(data) {
+    // @TODO: Build a Bubble Chart using the sample data
+    var trace1 = {
+      x: data.otu_ids,
+      y: data.sample_values,
+      type: "scatter",
+      mode: "markers",
+      marker: {
+        size: data.sample_values,
+        color: data.otu_ids
+      },
+      text: data.otu_labels
+    };
+    var bubbleChart = [trace1];
+    Plotly.newPlot("bubble", bubbleChart);
+
+    // @TODO: Build a Pie Chart
+    // HINT: You will need to use slice() to grab the top 10 sample_values,
+    // otu_ids, and labels (10 each).
     array = [];
     for (var i = 0; i < data.otu_ids.length; i++) {
       array.push({"otu_ids": data.otu_ids[i], "otu_labels": data.otu_labels[i], "sample_values": data.sample_values[i]});
@@ -31,17 +59,17 @@ function buildCharts(sample) {
     array = array.slice(0, 10);
     console.log(array);
 
-    var trace1 = {
-      values: array.map(data.sample_values),
+    var trace2 = {
+      values: array.map(row => row.sample_values),
       type: 'pie'
     };
 
-    var data = [trace1];
+    var pieData = [trace2];
 
-    Plotly.newPlot("pie", data);
+    Plotly.newPlot("pie", pieData);
   });
 }
-// buildCharts();
+
 
 function init() {
   // Grab a reference to the dropdown select element

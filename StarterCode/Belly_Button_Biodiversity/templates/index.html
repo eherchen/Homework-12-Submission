@@ -33,6 +33,14 @@
       </div>
       <div class="col-md-5">
         <div id="pie"></div>
+        <script>
+                var url = "/sample/<sample>";
+        d3.json(url).then(function(data){
+            var layout = {
+                title: "Lyric Frequency"}
+            Plotly.plot("pie", data, layout);
+        });
+        </script>
       </div>
       <div class="col-md-5">
         <div id="gauge"></div>
