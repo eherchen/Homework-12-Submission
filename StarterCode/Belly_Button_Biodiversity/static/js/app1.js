@@ -61,6 +61,7 @@ function buildCharts(sample) {
 
     var trace2 = {
       values: array.map(row => row.sample_values),
+      labels: array.map(row => row.otu_ids),
       type: 'pie'
     };
 
