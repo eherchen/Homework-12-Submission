@@ -6,3 +6,6 @@ Full dataset can be found here: http://robdunnlab.com/projects/belly-button-biod
 Visualization include:  Pie chart, Bubble Chart
 
 Tools Used: Python, Plotly.js, Sqlite, csv, Json query
+
+![Alt Text]( https://github.com/eherchen/Belly-Button-Biodiversity-Analysis/blob/master/biodiv_image.png)
+![Alt Text]( https://github.com/eherchen/Belly-Button-Biodiversity-Analysis/blob/master/biodiv_image2.png)
